@@ -3,26 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Website</title>
+    <title>Premium Liquid Glass Website</title>
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         /* =========================================
-           GLOBAL RESET & PREMIUM SHARP-EDGE POLICY
+           GLOBAL RESET & TYPOGRAPHY
            ========================================= */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            border-radius: 0 !important; /* Strict zero border-radius for sharp edges */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* Font setup: Sans-serif for UI, Serif for reading content */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
             overflow-x: hidden;
-            background-color: #ffffff;
+            background-color: #fcfcfc;
+            color: #1a1a1a;
+        }
+
+        /* Prevent background scrolling when menu is open */
+        body.no-scroll {
+            overflow: hidden;
         }
 
         /* =========================================
-           1. TOP BAR (5% Height)
+           1. TOP BAR (5vh)
            ========================================= */
         #top-bar {
             height: 5vh;
@@ -32,25 +43,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             font-weight: 500;
             text-transform: uppercase;
         }
 
         /* =========================================
-           2. HEADER (10% Height)
+           2. HEADER (10vh)
            ========================================= */
         #header {
             height: 10vh;
             width: 100%;
             background-color: #ffffff;
-            position: relative; /* Static flow as requested */
+            position: relative;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
             z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
 
         .logo-container {
@@ -60,20 +72,19 @@
         }
 
         .logo-container img {
-            height: 95%;
+            height: 60%; /* Adjusted for better proportion */
             object-fit: contain;
         }
 
         /* Hamburger Menu Icon */
         .menu-btn {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 30px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 6px;
+            justify-content: space-between;
             cursor: pointer;
-            z-index: 2000; /* Stays above overlay */
+            z-index: 1000;
         }
 
         .menu-btn span {
@@ -81,17 +92,7 @@
             width: 100%;
             height: 2px;
             background-color: #000000;
-            transition: 0.4s ease-in-out;
-        }
-
-        .menu-btn.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .menu-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-btn.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
+            transition: 0.3s;
         }
 
         /* Glassy Overlay Menu */
@@ -101,11 +102,11 @@
             right: -100%;
             width: 100vw;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(25px); /* Apple style liquid glass */
-            -webkit-backdrop-filter: blur(25px);
-            z-index: 1500;
-            transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px);
+            z-index: 2000;
+            transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
             display: flex;
             flex-direction: column;
             padding: 5% 10%;
@@ -115,96 +116,133 @@
             right: 0;
         }
 
-        .overlay-logo {
-            height: 10vh;
-            margin-bottom: 5vh;
+        /* Cross Icon inside Overlay */
+        .close-btn {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        .close-btn::before, .close-btn::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background-color: #000;
+        }
+
+        .close-btn::before { transform: rotate(45deg); }
+        .close-btn::after { transform: rotate(-45deg); }
+
         .overlay-logo img {
-            height: 95%;
-            object-fit: contain;
+            height: 40px;
+            margin-bottom: 5vh;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
+            margin-top: 10vh;
         }
 
         .nav-links li a {
             text-decoration: none;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            font-family: 'Playfair Display', serif;
             font-weight: 700;
             color: #000000;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .nav-links li a:hover {
-            color: #555555;
+            color: #4b7bff;
+            padding-left: 15px; /* Smooth hover effect */
         }
 
         /* =========================================
-           3. HERO SECTION (70% Height)
+           3. HERO SECTION & FLUID BACKGROUND
            ========================================= */
-        #hero {
-            height: 70vh;
-            width: 100%;
+        /* Wrapper to hold hero and content area to share fluid bg */
+        .page-wrapper {
             position: relative;
-            background-color: #ffffff; /* Base top 20% white */
+            width: 100%;
             overflow: hidden;
+            background: #ffffff;
         }
 
         /* Fluid Physics "Rangoli" Gradient Background */
         .hero-bg-fluid {
             position: absolute;
-            top: 20%; /* Top 20% is pure white */
+            top: 10%; 
             left: 0;
             width: 100%;
-            height: 80%; /* Covers middle 30% (mix) and bottom 50% */
+            height: 150%; /* Extends well into the content below */
             z-index: 1;
             overflow: hidden;
-            background: #ffffff;
         }
 
-        /* Animated Colored Orbs for Premium Glassy Effect */
+        /* Faster, more visible animated colored orbs */
         .color-orb {
             position: absolute;
-            filter: blur(90px);
-            opacity: 0.8;
-            animation: fluidMove 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            filter: blur(80px);
+            opacity: 0.95; /* High visibility */
+            animation: fluidMove 6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .orb-1 { width: 50vw; height: 50vw; background: #ff4b4b; top: -10%; left: -10%; }
-        .orb-2 { width: 60vw; height: 40vw; background: #4b7bff; bottom: -20%; right: -10%; animation-delay: -5s; }
-        .orb-3 { width: 40vw; height: 40vw; background: #b04bff; top: 30%; left: 40%; animation-delay: -10s; }
+        .orb-1 { width: 55vw; height: 55vw; background: rgba(75, 123, 255, 0.7); top: -10%; left: -15%; }
+        .orb-2 { width: 65vw; height: 65vw; background: rgba(255, 75, 150, 0.6); top: 20%; right: -20%; animation-delay: -2s; }
+        .orb-3 { width: 45vw; height: 45vw; background: rgba(176, 75, 255, 0.6); top: 50%; left: 20%; animation-delay: -4s; }
 
         @keyframes fluidMove {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(10vw, -10vh) scale(1.1); }
-            100% { transform: translate(-10vw, 5vh) scale(0.9); }
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(15vw, -5vh) scale(1.2) rotate(15deg); }
+            100% { transform: translate(-10vw, 15vh) scale(0.9) rotate(-15deg); }
         }
 
         /* Glassmorphism layer over colors */
         .glass-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(50px); /* Heavy blur for that creamy Apple look */
+            -webkit-backdrop-filter: blur(50px);
             z-index: 2;
         }
 
-        /* Hero Image/Video Slider */
-        .hero-slider-container {
-            position: absolute;
-            top: 5%; /* 5% Top margin */
-            left: 5%; /* 5% Left margin */
-            width: 90%; /* Leaves 5% margin on right */
-            height: 95%; /* 100% of hero minus top margin */
+        /* Content layer above the fluid background */
+        .content-layer {
+            position: relative;
             z-index: 10;
+            width: 100%;
+        }
+
+        /* HERO LAYOUT: Top part is slider, bottom part is content */
+        #hero {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+        }
+
+        /* Premium Slider Frame (Rounded Corners & Shadow) */
+        .hero-slider-container {
+            width: 90%;
+            margin: 5vh auto; /* 5% margin top/bottom, 5% left/right (auto centers it) */
+            height: 60vh; /* 60% of the screen */
+            border-radius: 28px; /* Premium Rounded Corners */
             overflow: hidden;
-            background: #000; /* Placeholder for images */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), 0 inset 1px 0 rgba(255,255,255,0.5);
+            display: flex;
+            position: relative;
+            background: #000;
         }
 
         .slide {
@@ -213,10 +251,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #111;
-            color: #fff;
-            font-size: 2rem;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .slide img, .slide video {
@@ -225,28 +260,135 @@
             object-fit: cover;
         }
 
+        /* Slider Controls */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+        .dot {
+            width: 10px; height: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background: rgba(255,255,255,1);
+            transform: scale(1.3);
+        }
+
+        /* =========================================
+           4. TEXTBOOK STYLE CONTENT SECTION
+           ========================================= */
+        /* Content occupying bottom 40% of hero + extending below */
+        .premium-content-area {
+            width: 90%;
+            margin: 0 auto;
+            padding: 5vh 5%;
+            font-family: 'Playfair Display', serif; /* Textbook serif font */
+        }
+
+        .chapter-heading {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .chapter-subheading {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        /* Multi-column layout for desktop */
+        .textbook-columns {
+            display: column;
+            column-count: 2;
+            column-gap: 40px;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+        }
+
+        /* Drop Cap for the first letter */
+        .textbook-columns p:first-of-type::first-letter {
+            font-size: 4.5rem;
+            font-weight: 700;
+            float: left;
+            margin: 0.1em 0.1em 0 0;
+            line-height: 0.8;
+            color: #4b7bff;
+        }
+
+        .textbook-columns p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Additional content below hero */
+        .extended-content {
+            padding: 10vh 0;
+        }
+
+        .quote-block {
+            font-size: 2rem;
+            font-style: italic;
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto;
+            color: #000;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 30px 0;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .hero-slider-container {
-                height: 50%; /* 50% height in mobile */
+                height: 40vh; /* Reduced for mobile */
+                margin: 5vh auto;
+                border-radius: 16px;
+            }
+            .chapter-heading {
+                font-size: 2.5rem;
+            }
+            .textbook-columns {
+                column-count: 1; /* Single column on mobile */
+                text-align: left;
             }
             .nav-links li a {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- 1. TOP BAR -->
     <div id="top-bar">
-        Welcome to the Premium Experience
+        Welcome to the Premium Web Experience
     </div>
 
+    <!-- 2. HEADER -->
     <header id="header">
         <div class="logo-container">
-            <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo">
+            <!-- Official Gemini Logo URL -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Gemini Logo">
         </div>
         
+        <!-- Hamburger Icon -->
         <div class="menu-btn" id="menu-toggle">
             <span></span>
             <span></span>
@@ -254,21 +396,27 @@
         </div>
     </header>
 
+    <!-- FULLSCREEN GLASSY NAVIGATION MENU -->
     <nav id="nav-overlay">
+        <div class="close-btn" id="close-menu"></div>
+        
         <div class="overlay-logo">
-            <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Gemini Logo">
         </div>
+        <!-- Unlimited buttons -->
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">AI Tools</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#">01. The Beginning</a></li>
+            <li><a href="#">02. Capabilities</a></li>
+            <li><a href="#">03. Visual Engine</a></li>
+            <li><a href="#">04. Ecosystem</a></li>
+            <li><a href="#">05. Contact Core</a></li>
         </ul>
     </nav>
 
-    <section id="hero">
+    <!-- WRAPPER FOR FLUID BACKGROUND -->
+    <div class="page-wrapper">
+        
+        <!-- Background Animation -->
         <div class="hero-bg-fluid">
             <div class="color-orb orb-1"></div>
             <div class="color-orb orb-2"></div>
@@ -276,40 +424,126 @@
             <div class="glass-layer"></div>
         </div>
 
-        <div class="hero-slider-container" id="slider">
-            <div class="slide">
-                <span>Slide 1 (Image/Video Here)</span>
-            </div>
-            <div class="slide">
-                <span>Slide 2</span>
-            </div>
+        <!-- 3. HERO SECTION & CONTENT LAYER -->
+        <div class="content-layer">
+            <section id="hero">
+                <!-- PREMIUM ROUNDED SLIDER -->
+                <div class="hero-slider-container" id="slider">
+                    <!-- Slide 1: Internet Image -->
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Premium Liquid Abstract">
+                    </div>
+                    <!-- Slide 2: Internet Image -->
+                    <div class="slide">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2572&auto=format&fit=crop" alt="Premium Tech Workspace">
+                    </div>
+                    <!-- Slide 3: HTML5 Video -->
+                    <div class="slide">
+                        <!-- Used standard placeholder video from w3schools for stable rendering -->
+                        <video autoplay loop muted playsinline>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <!-- Slider dots -->
+                    <div class="slider-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+
+                <!-- 40% HERO CONTENT AREA (TEXTBOOK STYLE) -->
+                <div class="premium-content-area">
+                    <span class="chapter-subheading">Chapter I — The Genesis</span>
+                    <h1 class="chapter-heading">Designing the Future,<br>One Pixel at a Time.</h1>
+                    
+                    <div class="textbook-columns">
+                        <p>In the modern era of digital interaction, the boundaries between physical reality and virtual interfaces are dissolving. We are no longer just looking at screens; we are interacting with dynamic canvases that respond to our touch, anticipate our needs, and adapt to our environments seamlessly. This transition requires a fundamental shift in how we perceive layout and motion.</p>
+                        <p>The implementation of fluid gradients, structural glassmorphism, and precision-driven typography creates an immersive experience. When you combine the mathematical rigidity of standard layouts with organic, physics-based background movements, the result is a harmonious tension that keeps the user engaged.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 60% EXTENDED CONTENT AREA (CONTINUING BELOW HERO) -->
+            <section class="premium-content-area extended-content">
+                <div class="quote-block">
+                    "True premium design is invisible. It feels less like a built product, and more like an inevitable force of nature."
+                </div>
+                
+                <div class="textbook-columns">
+                    <p>Building upon the foundational principles of responsive design, the next evolutionary step is emotional design. It is not enough for a button to simply work; the state change must feel satisfying. It is not enough for an image to load; it must reveal itself in a way that respects the user's attention. Every micro-interaction is an opportunity to build trust.</p>
+                    <p>As we navigate deeper into this structural paradigm, you will notice the deliberate use of negative space. Space is not empty; it is the active ingredient that gives typography its voice and imagery its impact. By constraining the visual elements within rounded, meticulously calculated boundaries, we give the eye a place to rest, digest, and appreciate the craftsmanship of the code.</p>
+                    <p>This textbook-style approach forces a slower, more deliberate consumption of information, reminiscent of reading a high-end editorial magazine. It is the perfect antidote to the chaotic, rapid-fire scrolling of modern social feeds.</p>
+                </div>
+            </section>
         </div>
-    </section>
+    </div>
 
+    <!-- =========================================
+         JAVASCRIPT
+         ========================================= -->
     <script>
-        // 1. Hamburger Menu Logic
+        // 1. Hamburger Menu Logic (With Scroll Lock)
         const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
         const navOverlay = document.getElementById('nav-overlay');
+        const body = document.body;
 
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navOverlay.classList.toggle('open');
+        function openNav() {
+            navOverlay.classList.add('open');
+            body.classList.add('no-scroll'); // Prevents background scroll
+        }
+
+        function closeNav() {
+            navOverlay.classList.remove('open');
+            body.classList.remove('no-scroll'); // Re-enables scroll
+        }
+
+        menuToggle.addEventListener('click', openNav);
+        closeMenu.addEventListener('click', closeNav);
+
+        // Optional: Close menu when a link is clicked
+        const navLinks = document.querySelectorAll('.nav-links li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeNav);
         });
 
-        // 2. Basic Slider Logic (Auto slide for demonstration)
+        // 2. Slider Logic
         const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
         let currentSlide = 0;
+        let slideInterval;
+
+        function updateSlider(index) {
+            slides.forEach((slide, i) => {
+                slide.style.transform = `translateX(-${index * 100}%)`;
+            });
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
 
         function nextSlide() {
             currentSlide = (currentSlide + 1) % slides.length;
-            slides.forEach(slide => {
-                slide.style.transform = `translateX(-${currentSlide * 100}%)`;
-            });
+            updateSlider(currentSlide);
         }
 
-        // Change slide every 3 seconds
-        setInterval(nextSlide, 3000);
-    </script>
+        // Initialize slider
+        function startSlider() {
+            slideInterval = setInterval(nextSlide, 4000); // 4 seconds per slide
+        }
 
+        startSlider();
+
+        // Allow manual dot clicking
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval); // Pause auto-slide on manual interaction
+                currentSlide = index;
+                updateSlider(currentSlide);
+                startSlider(); // Restart auto-slide
+            });
+        });
+    </script>
 </body>
 </html>
